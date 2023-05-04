@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:wallpaper/view/fav/fav_view/fav_view.dart';
 import 'package:wallpaper/view/home/home_view/home_view.dart';
+import 'package:wallpaper/view/search/search_view/search_view.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   final pages = [
     const  HomeView(),
-    const  Scaffold(),
+    const  SearchView(),
     const  FavView(),
   ];
 
