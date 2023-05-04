@@ -6,7 +6,13 @@ class AppBarWidget extends StatefulWidget {
   final GestureTapCallback? onTapAction;
   final IconData? actionIcon;
 
-  const AppBarWidget({Key? key, required this.title, this.leading, this.action, this.onTapAction, this.actionIcon})
+  const AppBarWidget(
+      {Key? key,
+      required this.title,
+      this.leading,
+      this.action,
+      this.onTapAction,
+      this.actionIcon})
       : super(key: key);
 
   @override
@@ -53,29 +59,31 @@ class _AppBarWidgetState extends State<AppBarWidget> {
             ),
           ),
       actions: [
-        widget.action ?? InkWell(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          onTap: widget.onTapAction ?? () {},
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            padding: const EdgeInsets.symmetric(
-              horizontal: 6,
+        widget.action ??
+            InkWell(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: widget.onTapAction ?? () {},
+              child: Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 6,
+                ),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.3)),
+                    borderRadius: BorderRadius.circular(8.0)),
+                child: Icon(
+                  widget.actionIcon ?? Icons.search_outlined,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 22,
+                ),
+              ),
             ),
-            decoration: BoxDecoration(
-                border: Border.all(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .primary
-                        .withOpacity(0.3)),
-                borderRadius: BorderRadius.circular(8.0)),
-            child: Icon(
-            widget.actionIcon ??   Icons.search_outlined,
-              color: Theme.of(context).colorScheme.primary,
-              size: 22,
-            ),
-          ),
-        ),
       ],
     );
   }

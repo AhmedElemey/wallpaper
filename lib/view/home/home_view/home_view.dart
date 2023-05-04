@@ -1,10 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:wallpaper/view/home/home_widgets/top_app_bar_widget.dart';
-
-
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -14,7 +11,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
@@ -24,10 +20,9 @@ class _HomeViewState extends State<HomeView> {
         preferredSize: Size(screenWidth, screenHeight * 0.07),
         child: const AppBarWidget(
           title: "Home",
-            leading: SizedBox.shrink(),
+          leading: SizedBox.shrink(),
           actionIcon: Icons.home,
         ),
-
       ),
       body: ListView(
         physics: const BouncingScrollPhysics(),
@@ -91,7 +86,6 @@ class _HomeViewState extends State<HomeView> {
   }
 }
 
-
 class HomeGridViewWidget extends StatelessWidget {
   const HomeGridViewWidget({
     Key? key,
@@ -140,33 +134,32 @@ class HomeGridViewWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               child: image == null
                   ? Image.asset(
-                'assets/images/pexels-feyza-altun-15912960.jpg',
-                fit: BoxFit.cover,
-              )
+                      'assets/images/pexels-feyza-altun-15912960.jpg',
+                      fit: BoxFit.cover,
+                    )
                   : CachedNetworkImage(
-                imageUrl: "$image",
-                fit: BoxFit.cover,
-                progressIndicatorBuilder:
-                    (context, url, downloadProgress) => Center(
-                    child: Shimmer.fromColors(
-                        baseColor: Colors.grey.shade300,
-                        highlightColor: Colors.grey.shade100,
-                        child: Image.asset(
+                      imageUrl: "$image",
+                      fit: BoxFit.cover,
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) => Center(
+                              child: Shimmer.fromColors(
+                                  baseColor: Colors.grey.shade300,
+                                  highlightColor: Colors.grey.shade100,
+                                  child: Image.asset(
+                                    'assets/images/pexels-feyza-altun-15912960.jpg',
+                                    fit: BoxFit.cover,
+                                    width: screenWidth * 0.448,
+                                    height: screenHeight * 0.2,
+                                  ))),
+                      errorWidget: (context, url, error) {
+                        return Image.asset(
                           'assets/images/pexels-feyza-altun-15912960.jpg',
                           fit: BoxFit.cover,
-                          width: screenWidth * 0.448,
-                          height: screenHeight * 0.2,
-                        ))),
-                errorWidget: (context, url, error) {
-                  return Image.asset(
-                    'assets/images/pexels-feyza-altun-15912960.jpg',
-                    fit: BoxFit.cover,
-                  );
-                },
-              ),
+                        );
+                      },
+                    ),
             ),
           ),
-
         ],
       ),
     );

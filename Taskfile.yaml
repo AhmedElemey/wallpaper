@@ -1,0 +1,49 @@
+version: 3
+
+tasks:
+  generate-build:
+    cmds:
+      - flutter pub run build_runner build --delete-conflicting-outputs
+
+  generate-watch:
+    cmds:
+      - flutter pub run build_runner watch --delete-conflicting-outputs 
+  
+  clean:
+    cmds:
+      - flutter clean
+      - flutter pub get
+  
+  feature:
+    cmds:
+      - mason make riverpod_clean_feature
+  
+  erase:
+    cmds:
+      # - adb shell pm uninstall
+      - adb uninstall sa.arco.services
+  
+  # splash:
+  #   cmds:
+  #     - flutter pub run flutter_native_splash:create
+  splash:
+    cmds:
+      - flutter pub run flutter_native_splash:create --path=packages/design_system/flutter_native_splash.yaml
+  
+  icons:
+    cmds:
+      - flutter pub get
+      - flutter pub run flutter_launcher_icons:main
+
+  apk:
+    cmds: 
+      - flutter build apk --release --dart-define=ARCO_API="https://test.arco.sa:620/Api/Mobile" "--dart-define=MAPS_KEY=AIzaSyBpb2i-vgld0n2AjBJiTifgilbEtwBknbo"
+  aab:
+    cmds: 
+      - flutter build appbundle --release --dart-define=ARCO_API="https://test.arco.sa:620/Api/Mobile" "--dart-define=MAPS_KEY=AIzaSyBpb2i-vgld0n2AjBJiTifgilbEtwBknbo"
+ 
+  
+  delete-branch:
+    cmds: 
+      - git branch -D {{.CLI_ARGS}}
+      - git push origin -d {{.CLI_ARGS}}

@@ -1,11 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:wallpaper/view/home/home_view/home_view.dart';
 import 'package:wallpaper/view/home/home_widgets/top_app_bar_widget.dart';
-
-
 
 class FavView extends StatefulWidget {
   const FavView({Key? key}) : super(key: key);
@@ -15,7 +10,6 @@ class FavView extends StatefulWidget {
 }
 
 class _FavViewState extends State<FavView> {
-
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
@@ -24,11 +18,10 @@ class _FavViewState extends State<FavView> {
       appBar: PreferredSize(
         preferredSize: Size(screenWidth, screenHeight * 0.07),
         child: const AppBarWidget(
-            title: "Favourite",
-            leading: SizedBox.shrink(),
+          title: "Favourite",
+          leading: SizedBox.shrink(),
           actionIcon: Icons.favorite_outline_sharp,
         ),
-
       ),
       body: ListView(
         physics: const BouncingScrollPhysics(),
@@ -79,12 +72,8 @@ class _FavViewState extends State<FavView> {
                       ),
                       Text(
                         "Fav",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(
-                            color:
-                            Theme.of(context).colorScheme.onPrimary,
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimary,
                             fontSize: 16,
                             fontWeight: FontWeight.w600),
                       ),
@@ -104,10 +93,10 @@ class _FavViewState extends State<FavView> {
                               .textTheme
                               .bodyMedium!
                               .copyWith(
-                              color:
-                              Theme.of(context).colorScheme.secondary,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600),
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600),
                         ),
                       ),
                     ],
@@ -141,11 +130,12 @@ class _FavViewState extends State<FavView> {
                             },
                           ),
                           Positioned(
-                            left: 10,top: 10,
+                            left: 10,
+                            top: 10,
                             child: Icon(
                               Icons.delete,
                               size: 30,
-                              color:Theme.of(context).colorScheme.error,
+                              color: Theme.of(context).colorScheme.error,
                             ),
                           ),
                         ],
@@ -162,4 +152,3 @@ class _FavViewState extends State<FavView> {
     );
   }
 }
-
