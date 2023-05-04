@@ -2,13 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-const kArcoApiKey = 'ARCO_API';
-const kFCMTopic = 'FCM_TOPIC';
-const arHeader = 'ar-SA';
-const enHeader = 'en';
-
-const demoNumber = '500000000';
-
 final serverErrorProvider = StateProvider<int>((ref) => 200);
 final dioProvider = Provider<Dio>(
   (ref) {

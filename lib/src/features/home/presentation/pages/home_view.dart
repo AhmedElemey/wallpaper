@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wallpaper/src/features/home/presentation/widgets/top_app_bar_widget.dart';
-
 import '../../domain/home.dart';
 import '../controllers/home_controller.dart';
 import '../widgets/home_view_widget.dart';
@@ -160,10 +159,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
                     ],
                   ),
                 ),
-            loading: () => Center(
+            loading: () => const Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       CircularProgressIndicator.adaptive(),
                     ],
                   ),
