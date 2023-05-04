@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:wallpaper/view/fav/fav_view/fav_view.dart';
-import 'package:wallpaper/view/home/home_view/home_view.dart';
+import 'package:wallpaper/src/features/home/presentation/pages/home_view.dart';
+import 'package:wallpaper/view/search/search_view/search_view.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -14,15 +14,15 @@ int currentIndex = 0;
 
 class _BottomNavBarState extends State<BottomNavBar> {
   void changePage(int index) {
-  setState(() {
-    currentIndex = index;
-  });
+    setState(() {
+      currentIndex = index;
+    });
   }
 
   final pages = [
-    const  HomeView(),
-    const  Scaffold(),
-    const  FavView(),
+    const HomeView(),
+    const SearchView(),
+    const FavView(),
   ];
 
   @override
@@ -45,24 +45,25 @@ class _BottomNavBarState extends State<BottomNavBar> {
           data: Theme.of(context).copyWith(
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
-              backgroundColor:Theme.of(context).colorScheme.background,
+              backgroundColor: Theme.of(context).colorScheme.background,
               canvasColor: Colors.transparent),
           child: ClipRRect(
-            borderRadius:  const BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15),
             ),
             child: NavigationBarTheme(
               data: NavigationBarThemeData(
-                  labelTextStyle: MaterialStateProperty.all(Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w700,
-                  )),
+                  labelTextStyle: MaterialStateProperty.all(
+                      Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
+                          )),
                   indicatorColor: Colors.transparent),
               child: NavigationBar(
                 animationDuration: const Duration(seconds: 1),
                 labelBehavior:
-                NavigationDestinationLabelBehavior.onlyShowSelected,
+                    NavigationDestinationLabelBehavior.onlyShowSelected,
                 backgroundColor: Colors.white,
                 height: 75,
                 selectedIndex: currentIndex,
@@ -74,24 +75,32 @@ class _BottomNavBarState extends State<BottomNavBar> {
                         child: Container(
                           width: 36,
                           height: 36,
-                          decoration:  BoxDecoration(
-                              color:Theme.of(context).colorScheme.onSecondary,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.onSecondary,
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(4))),
+                                  const BorderRadius.all(Radius.circular(4))),
                           child: const Icon(
-                            Icons.home, color: Colors.white,
+                            Icons.home,
+                            color: Colors.white,
                           ),
                         ),
                       ),
                       icon: Container(
                         width: 36,
                         height: 36,
-                        decoration:  BoxDecoration(
-                            color: Theme.of(context).colorScheme.onSecondary.withOpacity(0.1),
+                        decoration: BoxDecoration(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSecondary
+                                .withOpacity(0.1),
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(4))),
-                        child:   Icon(
-                          Icons.home, color: Theme.of(context).colorScheme.onSecondary.withOpacity(0.7),
+                                const BorderRadius.all(Radius.circular(4))),
+                        child: Icon(
+                          Icons.home,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSecondary
+                              .withOpacity(0.7),
                           size: 30,
                         ),
                       ),
@@ -102,12 +111,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
                         child: Container(
                           width: 36,
                           height: 36,
-                          decoration:  BoxDecoration(
-                              color:Theme.of(context).colorScheme.onSecondary,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.onSecondary,
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(4))),
-                          child:  Icon(
-                            Icons.search, color: Theme.of(context).colorScheme.tertiary,
+                                  const BorderRadius.all(Radius.circular(4))),
+                          child: Icon(
+                            Icons.search,
+                            color: Theme.of(context).colorScheme.tertiary,
                             size: 24,
                           ),
                         ),
@@ -115,12 +125,20 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       icon: Container(
                         width: 36,
                         height: 36,
-                        decoration:  BoxDecoration(
-                            color: Theme.of(context).colorScheme.onSecondary.withOpacity(0.1),
+                        decoration: BoxDecoration(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSecondary
+                                .withOpacity(0.1),
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(4))),
-                        child:   Icon(
-                          Icons.search, color: Theme.of(context).colorScheme.onSecondary.withOpacity(0.7),size: 26,
+                                const BorderRadius.all(Radius.circular(4))),
+                        child: Icon(
+                          Icons.search,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSecondary
+                              .withOpacity(0.7),
+                          size: 26,
                         ),
                       ),
                       label: ""),
@@ -130,12 +148,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
                         child: Container(
                           width: 36,
                           height: 36,
-                          decoration:  BoxDecoration(
+                          decoration: BoxDecoration(
                               color: Theme.of(context).colorScheme.onSecondary,
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(4))),
-                          child:  Icon(
-                            Icons.favorite, color: Theme.of(context).colorScheme.tertiary,
+                                  const BorderRadius.all(Radius.circular(4))),
+                          child: Icon(
+                            Icons.favorite,
+                            color: Theme.of(context).colorScheme.tertiary,
                             size: 22,
                           ),
                         ),
@@ -143,12 +162,20 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       icon: Container(
                         width: 36,
                         height: 36,
-                        decoration:  BoxDecoration(
-                            color: Theme.of(context).colorScheme.onSecondary.withOpacity(0.1),
+                        decoration: BoxDecoration(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSecondary
+                                .withOpacity(0.1),
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(4))),
-                        child:   Icon(
-                          Icons.favorite, color: Theme.of(context).colorScheme.onSecondary.withOpacity(0.7), size: 22,
+                                const BorderRadius.all(Radius.circular(4))),
+                        child: Icon(
+                          Icons.favorite,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSecondary
+                              .withOpacity(0.7),
+                          size: 22,
                         ),
                       ),
                       label: ""),

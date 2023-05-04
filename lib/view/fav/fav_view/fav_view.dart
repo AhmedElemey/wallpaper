@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:wallpaper/view/home/home_view/home_view.dart';
-import 'package:wallpaper/view/home/home_widgets/top_app_bar_widget.dart';
+import 'package:wallpaper/src/features/home/presentation/pages/home_view.dart';
+import 'package:wallpaper/src/features/home/presentation/widgets/top_app_bar_widget.dart';
+
+import '../../../src/features/home/presentation/widgets/home_view_widget.dart';
 
 class FavView extends StatefulWidget {
   const FavView({Key? key}) : super(key: key);
