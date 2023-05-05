@@ -91,6 +91,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
               }
               return ListView(
                 physics: const BouncingScrollPhysics(),
+                controller: _scrollController,
                 children: [
                   const SizedBox(
                     height: 15,
@@ -118,7 +119,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                       child: Column(
                         children: [
                           GridView.builder(
-                            controller: _scrollController,
+                            // controller: _scrollController,
                             primary: false,
                             shrinkWrap: true,
                             physics: const BouncingScrollPhysics(),
@@ -133,7 +134,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                               return HomeGridViewWidget(
                                 screenHeight: screenHeight,
                                 screenWidth: screenWidth,
-                                image: data![index].src.original,
+                                image: data[index].src.original,
                                 onTap: () {
                                   Navigator.push(
                                     context,
@@ -145,7 +146,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                                 },
                               );
                             },
-                            itemCount: 10,
+                            itemCount: data!.length,
                           )
                         ],
                       ),
