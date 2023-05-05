@@ -33,7 +33,7 @@ class HomeGridViewWidget extends StatelessWidget {
         children: [
           Container(
             width: screenWidth / 2.332,
-            height: screenHeight / 3,
+            height: screenHeight / 3.35,
             //padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
@@ -65,7 +65,7 @@ class HomeGridViewWidget extends StatelessWidget {
                                     'assets/images/pexels-feyza-altun-15912960.jpg',
                                     fit: BoxFit.cover,
                                     width: screenWidth / 2.332,
-                                    height: screenHeight / 3,
+                                    height: screenHeight / 3.5,
                                   ))),
                       errorWidget: (context, url, error) {
                         return Image.asset(

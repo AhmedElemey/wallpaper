@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:wallpaper/src/features/home/presentation/pages/wallpaper_details.dart';
 import 'package:wallpaper/src/features/home/presentation/widgets/top_app_bar_widget.dart';
 import '../../domain/home.dart';
 import '../controllers/home_controller.dart';
@@ -127,12 +128,13 @@ class _HomeViewState extends ConsumerState<HomeView> {
                                 screenWidth: screenWidth,
                                 image: data![index].src.original,
                                 onTap: () {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) => ProductDetails(),
-                                  //   ),
-                                  // );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => WallpaperView(
+                                          photoUrl: data[index].src.original),
+                                    ),
+                                  );
                                 },
                               );
                             },
@@ -159,10 +161,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
                     ],
                   ),
                 ),
-            loading: () => const Center(
+            loading: () => Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       CircularProgressIndicator.adaptive(),
                     ],
                   ),
