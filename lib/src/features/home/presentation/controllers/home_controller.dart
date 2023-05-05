@@ -28,7 +28,7 @@ class HomeStateNotifier extends StateNotifier<AsyncValue<List<PhotosEntity>?>> {
       final temp = result.photos;
       if (state.hasValue && temp != null) {
         if (temp.length < 10) {
-          ref.read(isLastNotificationRequest.notifier).state = true;
+          ref.read(isLastHomeDataRequest.notifier).state = true;
         }
         // final newTemp = AsyncValue.data([...state.value!, ...temp]);
         final newTemp = AsyncValue.data([...state.value!, ...temp]);

@@ -67,7 +67,7 @@ class _WallpaperViewState extends State<WallpaperView> {
                   highlightColor: Colors.transparent,
                   onTap: () {
                     Fluttertoast.showToast(
-                      msg: 'adding to fav',
+                      msg: 'adding to favorite',
                       toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.BOTTOM,
                       timeInSecForIosWeb: 1,

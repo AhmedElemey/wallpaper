@@ -18,21 +18,31 @@ class SearchView extends StatefulHookConsumerWidget {
 
 class _SearchViewState extends ConsumerState<SearchView> {
   TextEditingController searchController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
   bool isSearch = false;
   bool isGrid = false;
+  @override
+  void dispose() {
+    searchController.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
     final list = ref.watch(homeListFutureProvider);
-    List<SearchPhotosEntity>? searchResult;
-    ref.listen<AsyncValue<List<SearchPhotosEntity>?>>(searchListFutureProvider,
-        (previous, next) {
-      if (next.hasValue) {
-        searchResult = next.value;
-      }
-    });
+    // List<SearchPhotosEntity>? searchResult;
+    // ref.listen<AsyncValue<List<SearchPhotosEntity>?>>(searchListFutureProvider,
+    //     (previous, next) {
+    //   if (next.hasValue) {
+    //     setState(() {
+    //       searchResult = next.value;
+    //     });
+    //   }
+    // });
+    final searchResult = ref.watch(searchListFutureProvider);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(screenWidth, screenHeight * 0.07),
@@ -47,14 +57,20 @@ class _SearchViewState extends ConsumerState<SearchView> {
         //   physics: const BouncingScrollPhysics(),
         children: [
           SearchTextField(
+            focusNode: _focusNode,
             controller: searchController,
             padding: const EdgeInsets.symmetric(horizontal: 40.0),
             hintText: "Type Here",
             onChanged: (value) {
-              searchController.text = value;
+              setState(() {
+                TextSelection previousSelection = searchController.selection;
+                searchController.text = value;
+                searchController.selection = previousSelection;
+              });
             },
             prefixIcon: InkWell(
               onTap: () {
+                _focusNode.unfocus();
                 ref.watch(searchListFutureProvider.notifier).fetchSearchList(
                     SearchRequest(page: 1, query: searchController.text));
               },
@@ -208,45 +224,84 @@ class _SearchViewState extends ConsumerState<SearchView> {
                             ),
                           )),
                 },
-                if (searchController.text != '' && searchResult != null) ...{
-                  isGrid
-                      ? GridView.builder(
-                          primary: false,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 20),
-                          shrinkWrap: true,
-                          physics: const BouncingScrollPhysics(),
-                          gridDelegate:
-                              SliverGridDelegateWithMaxCrossAxisExtent(
-                            crossAxisSpacing: 25,
-                            mainAxisSpacing: screenHeight * 0.05,
-                            maxCrossAxisExtent: screenHeight * 0.246,
-                            childAspectRatio: 0.65,
+                if (searchController.text != '') ...{
+                  searchResult.when(
+                      data: (data) {
+                        debugPrint(data.toString());
+                        if (data == null || data.isEmpty) {
+                          Center(
+                            child: Text(
+                              'No Photos Matchs your Search',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).colorScheme.primary),
+                            ),
+                          );
+                        }
+                        return isGrid
+                            ? GridView.builder(
+                                primary: false,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 20),
+                                shrinkWrap: true,
+                                physics: const BouncingScrollPhysics(),
+                                gridDelegate:
+                                    SliverGridDelegateWithMaxCrossAxisExtent(
+                                  crossAxisSpacing: 25,
+                                  mainAxisSpacing: screenHeight * 0.05,
+                                  maxCrossAxisExtent: screenHeight * 0.246,
+                                  childAspectRatio: 0.65,
+                                ),
+                                itemBuilder: (BuildContext ctx, index) {
+                                  return HomeGridViewWidget(
+                                    screenHeight: screenHeight,
+                                    screenWidth: screenWidth,
+                                    image: data[index].src.original,
+                                  );
+                                },
+                                itemCount: data!.length,
+                              )
+                            : ListView.separated(
+                                shrinkWrap: true,
+                                physics: const BouncingScrollPhysics(),
+                                itemBuilder: (ctx, index) {
+                                  return HomeListviewWidget(
+                                    image: data[index].src.original,
+                                  );
+                                },
+                                separatorBuilder: (ctx, index) {
+                                  return const SizedBox(
+                                    height: 30,
+                                  );
+                                },
+                                itemCount: data!.length,
+                              );
+                      },
+                      error: (error, stackTrace) => Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  error.toString(),
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
+                                )
+                              ],
+                            ),
                           ),
-                          itemBuilder: (BuildContext ctx, index) {
-                            return HomeGridViewWidget(
-                              screenHeight: screenHeight,
-                              screenWidth: screenWidth,
-                              image: searchResult![index].src.original,
-                            );
-                          },
-                          itemCount: 8,
-                        )
-                      : ListView.separated(
-                          shrinkWrap: true,
-                          physics: const BouncingScrollPhysics(),
-                          itemBuilder: (ctx, index) {
-                            return HomeListviewWidget(
-                              image: searchResult![index].src.original,
-                            );
-                          },
-                          separatorBuilder: (ctx, index) {
-                            return const SizedBox(
-                              height: 30,
-                            );
-                          },
-                          itemCount: searchResult!.length,
-                        )
+                      loading: () => Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                CircularProgressIndicator.adaptive(),
+                              ],
+                            ),
+                          ))
                 },
                 const SizedBox(
                   height: 30,

@@ -6,13 +6,13 @@ import '../../domain/home.dart';
 import '../controllers/home_controller.dart';
 import '../widgets/home_view_widget.dart';
 
-final isLastNotificationRequest = StateProvider<bool>((ref) {
+final isLastHomeDataRequest = StateProvider<bool>((ref) {
   return false;
 });
 final offsetProvider = StateProvider<int>((ref) {
   return 2;
 });
-final isNotificationLoading = StateProvider<bool>((ref) {
+final isHomeDataLoading = StateProvider<bool>((ref) {
   return false;
 });
 
@@ -27,15 +27,15 @@ class _HomeViewState extends ConsumerState<HomeView> {
   late final ScrollController _scrollController;
   Future<void> _fetchMoreHomeData(int offset) async {
     if (offset > 1) {
-      ref.read(isNotificationLoading.notifier).state = true;
+      ref.read(isHomeDataLoading.notifier).state = true;
     }
     ref.watch(offsetProvider);
     await ref.read(homeListFutureProvider.notifier).getMoreHomeData(HomeRequest(
           page: offset,
-          per_page: 40,
+          per_page: 10,
         ));
 
-    ref.read(isNotificationLoading.notifier).state = false;
+    ref.read(isHomeDataLoading.notifier).state = false;
   }
 
   @override
@@ -43,15 +43,22 @@ class _HomeViewState extends ConsumerState<HomeView> {
     super.initState();
     _scrollController = ScrollController()
       ..addListener(() {
-        if (_scrollController.position.pixels ==
-            _scrollController.position.maxScrollExtent) {
+        if (_scrollController.offset >=
+                _scrollController.position.maxScrollExtent &&
+            !_scrollController.position.outOfRange) {
           final newOffset = ref.read(offsetProvider.notifier).state++;
-          final lastRequest = ref.watch(isLastNotificationRequest);
+          final lastRequest = ref.watch(isLastHomeDataRequest);
           if (!lastRequest) {
             _fetchMoreHomeData(newOffset);
           }
         }
       });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -126,7 +133,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                               return HomeGridViewWidget(
                                 screenHeight: screenHeight,
                                 screenWidth: screenWidth,
-                                image: data[index].src.original,
+                                image: data![index].src.original,
                                 onTap: () {
                                   Navigator.push(
                                     context,
@@ -138,7 +145,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                                 },
                               );
                             },
-                            itemCount: data!.length,
+                            itemCount: 10,
                           )
                         ],
                       ),
