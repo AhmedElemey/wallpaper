@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wallpaper/view/fav/fav_view/fav_view.dart';
+import 'package:wallpaper/src/features/favorite/presentation/pages/fav_view.dart';
 import 'package:wallpaper/src/features/home/presentation/pages/home_view.dart';
 import 'package:wallpaper/view/search/search_view/search_view.dart';
 

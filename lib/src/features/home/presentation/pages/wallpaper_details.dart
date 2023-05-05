@@ -7,6 +7,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
+
+import '../../../favorite/presentation/controllers/db_helper.dart';
 
 class WallpaperView extends StatefulWidget {
   const WallpaperView({
@@ -30,13 +33,50 @@ class _WallpaperViewState extends State<WallpaperView> {
           preferredSize: Size(screenWidth, screenHeight * 0.07),
           child: AppBarWidget(
             title: "Wallpaper Details",
-            leading: const SizedBox.shrink(),
+            leading: InkWell(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                height: 30,
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 6,
+                ),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.3)),
+                    borderRadius: BorderRadius.circular(8.0)),
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 22,
+                ),
+              ),
+            ),
             action: Row(
               children: [
                 InkWell(
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
-                  onTap: () {},
+                  onTap: () {
+                    Fluttertoast.showToast(
+                      msg: 'adding to fav',
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.white,
+                      textColor: Colors.black,
+                      fontSize: 16.0,
+                    );
+                    addFavorite(widget.photoUrl!);
+                  },
                   child: Container(
                     height: 30,
                     margin: const EdgeInsets.symmetric(
@@ -115,6 +155,29 @@ class _WallpaperViewState extends State<WallpaperView> {
             },
           ),
         ));
+  }
+
+  addFavorite(String imageUrl) async {
+    final String imagePath = await downloadAndSaveImage(imageUrl);
+    await DBHelper().insertFavorite(imagePath);
+    Fluttertoast.showToast(
+      msg: 'Photo added to fav',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.green,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+  }
+
+  Future<String> downloadAndSaveImage(String url) async {
+    final response = await http.get(Uri.parse(url));
+    final documentsDir = await getApplicationDocumentsDirectory();
+    final file =
+        File('${documentsDir.path}/${DateTime.now().toIso8601String()}.jpg');
+    await file.writeAsBytes(response.bodyBytes);
+    return file.path;
   }
 
   saveImage() async {
