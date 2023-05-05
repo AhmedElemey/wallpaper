@@ -126,7 +126,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                               return HomeGridViewWidget(
                                 screenHeight: screenHeight,
                                 screenWidth: screenWidth,
-                                image: data![index].src.original,
+                                image: data[index].src.original,
                                 onTap: () {
                                   Navigator.push(
                                     context,
@@ -138,7 +138,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                                 },
                               );
                             },
-                            itemCount: 10,
+                            itemCount: data!.length,
                           )
                         ],
                       ),

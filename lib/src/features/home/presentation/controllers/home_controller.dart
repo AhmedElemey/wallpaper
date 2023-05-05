@@ -7,7 +7,7 @@ import '../pages/home_view.dart';
 final homeListFutureProvider = StateNotifierProvider.autoDispose<
     HomeStateNotifier, AsyncValue<List<PhotosEntity>?>>((ref) {
   return HomeStateNotifier(const AsyncValue.data([]), ref: ref)
-    ..fetchHomeList(const HomeRequest(page: 1, per_page: 40));
+    ..fetchHomeList(const HomeRequest(page: 1, per_page: 10));
 });
 
 class HomeStateNotifier extends StateNotifier<AsyncValue<List<PhotosEntity>?>> {

@@ -103,6 +103,15 @@ class _WallpaperViewState extends State<WallpaperView> {
                   highlightColor: Colors.transparent,
                   onTap: () {
                     // _startDownload();
+                    Fluttertoast.showToast(
+                      msg: 'Downloading Photo',
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.white,
+                      textColor: Colors.black,
+                      fontSize: 16.0,
+                    );
                     saveImage();
                   },
                   child: Container(
@@ -161,7 +170,7 @@ class _WallpaperViewState extends State<WallpaperView> {
     final String imagePath = await downloadAndSaveImage(imageUrl);
     await DBHelper().insertFavorite(imagePath);
     Fluttertoast.showToast(
-      msg: 'Photo added to fav',
+      msg: 'Photo added to favorite',
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,

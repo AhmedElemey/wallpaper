@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:wallpaper/src/features/favorite/presentation/pages/fav_view.dart';
 import 'package:wallpaper/src/features/home/presentation/pages/home_view.dart';
-import 'package:wallpaper/view/search/search_view/search_view.dart';
+import 'package:wallpaper/src/features/search/presentation/pages/search_view.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
 
   @override
-  _BottomNavBarState createState() => _BottomNavBarState();
+  BottomNavBarState createState() => BottomNavBarState();
 }
 
 int currentIndex = 0;
 
-class _BottomNavBarState extends State<BottomNavBar> {
+class BottomNavBarState extends State<BottomNavBar> {
   void changePage(int index) {
     setState(() {
       currentIndex = index;
